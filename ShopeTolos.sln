@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopeTolos", "ShopeTolos\ShopeTolos.csproj", "{EAE72756-99BB-4EB0-B3A9-A3BF7E894641}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{0DA7EE34-EF9A-4321-B351-1531FCC5C67E}"
+	ProjectSection(SolutionItems) = preProject
+		..\Tools_shope\Tools\Ali.js = ..\Tools_shope\Tools\Ali.js
+		..\Tools_shope\Tools\Init.js = ..\Tools_shope\Tools\Init.js
+		..\Tools_shope\Tools\manifest.json = ..\Tools_shope\Tools\manifest.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAE72756-99BB-4EB0-B3A9-A3BF7E894641}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE72756-99BB-4EB0-B3A9-A3BF7E894641}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE72756-99BB-4EB0-B3A9-A3BF7E894641}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE72756-99BB-4EB0-B3A9-A3BF7E894641}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86737ECA-020C-435E-98B4-80934180472A}
+	EndGlobalSection
+EndGlobal
