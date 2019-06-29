@@ -1,0 +1,29 @@
+{
+  "name": "Tools Shope",
+  "description": "Tools",
+  "version": "1.0",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": [
+        "*://ru.aliexpress.com/item/*",
+        "*://pl.aliexpress.com/item/*",
+        "*://pt.aliexpress.com/item/*",
+        "*://es.aliexpress.com/item/*",
+        "*://fr.aliexpress.com/item/*",
+        "*://de.aliexpress.com/item/*",
+        "*://it.aliexpress.com/item/*",
+        "*://nl.aliexpress.com/item/*",
+        "*://tr.aliexpress.com/item/*",
+        "*://ja.aliexpress.com/item/*",
+        "*://ko.aliexpress.com/item/*",
+        "*://th.aliexpress.com/item/*",
+        "*://vi.aliexpress.com/item/*",
+        "*://ar.aliexpress.com/item/*",
+        "*://he.aliexpress.com/item/*"
+      ],
+      "js": [ "Ali.js", "Init.js" ],
+      "run_at": "document_start"
+    }
+  ]
+}

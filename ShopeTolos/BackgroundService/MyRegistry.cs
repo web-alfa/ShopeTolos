@@ -7,7 +7,7 @@ namespace ShopeTolos.BackgroundService
     {
         public MyRegistry()
         {
-            Schedule<UpdateDateShiping>().ToRunEvery(1).Days().At(9, 13);
+            Schedule<UpdateDateShiping>().ToRunEvery(1).Days().At(4, 00);
         }
     }
 }

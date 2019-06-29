@@ -7,7 +7,6 @@ namespace ShopeTolos.BackgroundService.WorkData
     public class ManagerData
     {
         private ConnectorEPN connectorEPN = null;
-        private List<Offer> offers = new List<Offer>();
 
         public ManagerData()
         {
@@ -25,14 +24,26 @@ namespace ShopeTolos.BackgroundService.WorkData
 
         private void WorkShiping(Categorie categorie)
         {
+            int backCountOrder = 0;
+            List<Offer> offers = new List<Offer>();
             int offset = 0;
             int totalFound = 0;
             List<Offer> offers1 = connectorEPN.GetOffers(categorie.id, ref totalFound, offset);
-            while(totalFound != 0)
+            if(offers1.Count != 0)
             {
-                offers1 = connectorEPN.GetOffers(categorie.id, ref totalFound, offset);
                 offers.AddRange(offers1);
+            }
+            while(offers1.Count != 0)
+            {
                 offset += 1000;
+                offers1 = connectorEPN.GetOffers(categorie.id, ref totalFound, offset);
+                if (offers1.Count == backCountOrder)
+                {
+                    offers = null;
+                    break;
+                }
+                offers.AddRange(offers1);
+                backCountOrder = offers1.Count;
             }
         }
     }
