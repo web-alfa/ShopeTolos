@@ -7,6 +7,7 @@ namespace DBOTool
     {
         public DbSet<PriceOffer> priceOffers { get; set; }
         public DbSet<OfferOrder> OfferOrders { get; set; }
+        public DbSet<Store> Stores { get; set; }
 
         public Context()
         {
