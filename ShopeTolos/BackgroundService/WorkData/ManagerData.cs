@@ -22,13 +22,13 @@ namespace ShopeTolos.BackgroundService.WorkData
             List<Categorie> categories = connectorEPN.GetCategories();
             foreach(Categorie categorie in categories)
             {
-                Task.Run(() => WorkShiping(categorie));
+                WorkShiping(categorie);
             }
         }
 
         private void WorkShiping(Categorie categorie)
         {
-            int backCountOrder = 0;
+            string backIdOrder = "";
             List<Offer> offers = new List<Offer>();
             int offset = 0;
             int totalFound = 0;
@@ -41,24 +41,24 @@ namespace ShopeTolos.BackgroundService.WorkData
             {
                 offset += 1000;
                 offers1 = connectorEPN.GetOffers(categorie.id, ref totalFound, offset);
-                if (offers1.Count == backCountOrder)
+                if (offers1[0].id == backIdOrder)
                 {
-                    Task.Run(() => SetOffers(offers));
+                    SetOffers(offers);
                     offers = null;
                     break;
                 }
                 offers.AddRange(offers1);
-                backCountOrder = offers1.Count;
+                backIdOrder = offers1[0].id;
             }
         }
 
-        private void SetOffers(List<Offer> offers)
+        private async void SetOffers(List<Offer> offers)
         {
             OfferOrder offerOrder = null;
             PriceOffer priceOffer = null;
             foreach (Offer offer in  offers)
             {
-                if(sqlCommandTools.CheckOffer(offer.id))
+                if (sqlCommandTools.CheckOffer(offer.id))
                 {
                     if(sqlCommandTools.CheckPrice(offer.id))
                     {
@@ -81,8 +81,8 @@ namespace ShopeTolos.BackgroundService.WorkData
                     offerOrder.Store_id = offer.store_id;
                     offerOrder.PriceOffers = new List<PriceOffer>();
                     offerOrder.PriceOffers.Add(priceOffer);
-                    sqlCommandTools.AddOffer(offerOrder);
-                }
+                    await sqlCommandTools.AddOffer(offerOrder);
+                } 
             }
         }
     }

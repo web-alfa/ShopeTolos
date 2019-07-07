@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ShopeTolos.BackgroundService
 {
@@ -48,10 +49,30 @@ namespace ShopeTolos.BackgroundService
             await context.SaveChangesAsync();
         }
 
-        public async void AddOffer(OfferOrder offerOrder)
+        public async Task AddOffer(OfferOrder offerOrder)
         {
-            await context.OfferOrders.AddAsync(offerOrder);
+            context.OfferOrders.Add(offerOrder);
             await context.SaveChangesAsync();
+        }
+
+        public List<OfferOrder> GetOfferOrders()
+        {
+            return context.OfferOrders.ToList();
+        }
+
+        public bool CheckUpdateShope(int idShope)
+        {
+            bool isDataUpdate = false;
+            Store store = context.Stores.FirstOrDefault(o => o.ID == idShope);
+            if (store != null)
+            {
+                string stroreDatateUpdate = store.DateUpdate;
+                if (DateTime.Parse(GetDFormat(stroreDatateUpdate)) > DateTime.Now.AddHours(2))
+                {
+                    isDataUpdate = true;
+                }
+            }
+            return isDataUpdate;
         }
 
         private string GetDFormat(string data)

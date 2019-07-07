@@ -63,6 +63,7 @@ namespace ShopeTolos.BackgroundService.WorkData
         {
             content = content.Remove(0, content.IndexOf("\"total_found\":") + "\"total_found\":".Length).Trim();
             content = content.Remove(content.IndexOf("\n"));
+            content = content.Replace("\"", "");
             return Convert.ToInt32(content);
         }
     }

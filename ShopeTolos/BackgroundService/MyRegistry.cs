@@ -1,4 +1,5 @@
 ﻿using FluentScheduler;
+using ShopeTolos.BackgroundService.WorkData;
 using ShopeTolos.WorkData.BackgroundService;
 
 namespace ShopeTolos.BackgroundService
@@ -7,7 +8,8 @@ namespace ShopeTolos.BackgroundService
     {
         public MyRegistry()
         {
-            Schedule<UpdateDateShiping>().ToRunEvery(1).Days().At(4, 00);
+            Schedule<UpdateDateShiping>().ToRunEvery(1).Days().At(4, 14);
+            Schedule<ConnectorAli>().ToRunEvery(1).Days().At(4, 18);
         }
     }
 }
