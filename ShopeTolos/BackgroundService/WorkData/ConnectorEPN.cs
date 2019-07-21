@@ -51,6 +51,25 @@ namespace ShopeTolos.BackgroundService.WorkData
             return GetData1(content, ref countTotalFound);
         }
 
+        public Offer GetOffer(string idoffer)
+        {
+            string req_data_1 = "{\"action\":\"offer_info\",\"id\":"+ idoffer + "}";
+            string requests_to_process = "{\"offe\":" + req_data_1 + "}";
+            string json = "{\"user_api_key\":\"7c16978b02e8175c92e0553252b7f357\",\"user_hash\":\"psw5xl287q2fpfkyc2osnef1t2dqopqh\",\"api_version\":\"2\",\"requests\":" + requests_to_process + "}";
+            request.Parameters.Clear();
+            request.AddJsonBody(json);
+            response = client.Execute(request);
+            content = response.Content;
+            return GetData1(content);
+        }
+
+        private Offer GetData1(string respJsonStr)
+        {
+            var responseAppS = JObject.Parse(respJsonStr);
+            var stepJson = responseAppS.GetValue("results").Value<JToken>("offe").Value<JToken>("offer").ToString();
+            return JsonConvert.DeserializeObject<Offer>(stepJson);
+        }
+
         private List<Offer> GetData1(string respJsonStr, ref int countTotalFound)
         {
             var responseAppS = JObject.Parse(respJsonStr);

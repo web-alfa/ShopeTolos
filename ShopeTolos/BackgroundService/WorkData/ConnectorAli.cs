@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-using System;
-using xNet;
-using FluentScheduler;
-using System.Threading.Tasks;
+﻿using AngleSharp.Html.Dom;
+using AngleSharp.Html.Parser;
 using DBOTool.Model;
+using FluentScheduler;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using xNet;
 
 namespace ShopeTolos.BackgroundService.WorkData
 {
@@ -13,10 +15,12 @@ namespace ShopeTolos.BackgroundService.WorkData
         private HttpRequest httpRequest = null;
         private string url = "aliexpress.com/store/feedback-score/";
         private SqlCommandTools sqlCommandTools = null;
+       private  HtmlParser htmlParser = null;
 
         public void Execute()
         {
             sqlCommandTools = new SqlCommandTools();
+            htmlParser = new HtmlParser();
             proxyCloction = new List<string>()
             {
                 "118.99.113.14:3128",
@@ -34,25 +38,75 @@ namespace ShopeTolos.BackgroundService.WorkData
             Task.Run(() => WorkParseAndAddDBShope());
         }
 
-        private void WorkParseAndAddDBShope()
+        private async void WorkParseAndAddDBShope()
         {
-            List<OfferOrder> offerOrders = sqlCommandTools.GetOfferOrders();
+            List<OfferOrder> offerOrders = await sqlCommandTools.GetOfferOrders();
             foreach(OfferOrder offerOrder in offerOrders)
             {
-                if(sqlCommandTools.CheckUpdateShope(offerOrder.Store_id))
+                Store store = GetReityngs(offerOrder.Store_id);
+                if (store != null)
                 {
-                    GetReityngs(offerOrder.Store_id);
-                }
-                else
-                {
-                    GetReityngs(offerOrder.Store_id);
+                    if (sqlCommandTools.CheckShope(offerOrder.Store_id))
+                    {
+                        if (sqlCommandTools.CheckUpdateShope(offerOrder.Store_id))
+                        {
+                            sqlCommandTools.UpdateStore(store);
+                        }
+                    }
+                    else
+                    {
+                        store.IDShope = offerOrder.Store_id;
+                        sqlCommandTools.AddStore(store);
+                    }
                 }
             }
         }
 
-        private void GetReityngs(int idStore)
+        private Store GetReityngs(int idStore)
         {
-            var htm = httpRequest.Get($"{url}{idStore}.html").ToString();
+            string srciFrame = null;
+            Store store = null;
+            string htm = httpRequest.Get($"{url}{idStore}.html").ToString();
+            IHtmlDocument htmlDocument = htmlParser.ParseDocument(htm);
+            srciFrame = GetIFrame(htmlDocument);
+            if(srciFrame != null)
+            {
+                store = new Store();
+                   htm = httpRequest.Get(srciFrame).ToString();
+                htmlDocument = htmlParser.ParseDocument(htm);
+                SetHeadInfo(store, htmlDocument);
+            }
+            return store;
+        }
+
+        private string GetIFrame(IHtmlDocument htmlDocument)
+        {
+            string srciFrame = null;
+            var element = htmlDocument.GetElementById("detail-displayer");
+            if(element != null)
+            {
+                srciFrame = element.GetAttribute("src").Remove(0, 2);
+            }
+            return srciFrame;
+        }
+
+        private void SetHeadInfo(Store store, IHtmlDocument htmlDocument)
+        {
+            store.Name = htmlDocument.GetElementById("feedback-summary").GetElementsByTagName("tr")[0].TextContent.Replace("Seller:", "").Trim();
+            store.StartOfSales = htmlDocument.GetElementById("feedback-summary").GetElementsByTagName("tr")[2].Children[1].TextContent.Trim();
+            var tmp = htmlDocument.GetElementById("feedback-dsr").GetElementsByTagName("tr")[0].GetElementsByTagName("td")[0].Children[0].Children[0].OuterHtml;
+            tmp = tmp.Remove(0, tmp.IndexOf(':') + 1);
+            store.ItemAsDescribed = tmp.Remove(tmp.IndexOf(';'));
+            tmp = htmlDocument.GetElementById("feedback-dsr").GetElementsByTagName("tr")[1].GetElementsByTagName("td")[0].Children[0].Children[0].OuterHtml;
+            tmp = tmp.Remove(0, tmp.IndexOf(':') + 1);
+            store.Communication = tmp.Remove(tmp.IndexOf(';'));
+            tmp = htmlDocument.GetElementById("feedback-dsr").GetElementsByTagName("tr")[2].GetElementsByTagName("td")[0].Children[0].Children[0].OuterHtml;
+            tmp = tmp.Remove(0, tmp.IndexOf(':') + 1);
+            store.ShippingSpeed = tmp.Remove(tmp.IndexOf(';'));
+            store.Positive4_5Stars = htmlDocument.GetElementById("feedback-history").Children[1].Children[0].Children[0].Children[1].Children[3].TextContent;
+            store.Neutral3Stars = htmlDocument.GetElementById("feedback-history").Children[1].Children[0].Children[0].Children[2].Children[3].TextContent;
+            store.Negative1_2Stars = htmlDocument.GetElementById("feedback-history").Children[1].Children[0].Children[0].Children[3].Children[3].TextContent;
+            store.DateUpdate = DateTime.Now.ToString();
         }
     }
 }

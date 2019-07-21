@@ -45,6 +45,7 @@ namespace ShopeTolos.BackgroundService.WorkData
                 {
                     SetOffers(offers);
                     offers = null;
+                    backIdOrder = "";
                     break;
                 }
                 offers.AddRange(offers1);
@@ -58,18 +59,9 @@ namespace ShopeTolos.BackgroundService.WorkData
             PriceOffer priceOffer = null;
             foreach (Offer offer in  offers)
             {
-                if (sqlCommandTools.CheckOffer(offer.id))
+                if (!sqlCommandTools.CheckOffer(offer.id))
                 {
-                    if(sqlCommandTools.CheckPrice(offer.id))
-                    {
-                        priceOffer = new PriceOffer();
-                        priceOffer.DatateUpdate = DateTime.Now.ToString();
-                        priceOffer.Price = offer.price;
-                        sqlCommandTools.AddPrice(offer.id, priceOffer);
-                    }
-                }
-                else
-                {
+
                     offerOrder = new OfferOrder();
                     priceOffer = new PriceOffer();
                     priceOffer.DatateUpdate = DateTime.Now.ToString();
@@ -82,7 +74,7 @@ namespace ShopeTolos.BackgroundService.WorkData
                     offerOrder.PriceOffers = new List<PriceOffer>();
                     offerOrder.PriceOffers.Add(priceOffer);
                     await sqlCommandTools.AddOffer(offerOrder);
-                } 
+                }
             }
         }
     }

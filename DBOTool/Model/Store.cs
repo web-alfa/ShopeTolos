@@ -1,8 +1,12 @@
-﻿namespace DBOTool.Model
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DBOTool.Model
 {
     public class Store
     {
         public int ID { get; set; }
+        public int IDShope { get; set; }
         public bool IsUodateToDay { get; set; }
         public string DateUpdate { get; set; }
         public string Name { get; set; }

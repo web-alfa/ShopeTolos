@@ -5,7 +5,7 @@ namespace ShopeTolos.WorkData.BackgroundService
 {
     public class UpdateDateShiping : IJob
     {
-        ManagerData managerData = null;
+        private ManagerData managerData = null;
 
         public async void Execute()
         {

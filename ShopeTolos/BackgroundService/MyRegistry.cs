@@ -8,8 +8,9 @@ namespace ShopeTolos.BackgroundService
     {
         public MyRegistry()
         {
-            Schedule<UpdateDateShiping>().ToRunEvery(1).Days().At(4, 14);
-            Schedule<ConnectorAli>().ToRunEvery(1).Days().At(4, 18);
+            Schedule<UpdateDateShiping>().ToRunNow().AndEvery(7).Hours();
+            Schedule<DataUpdatePriceShiping>().ToRunNow().AndEvery(2).Hours();
+            Schedule<ConnectorAli>().ToRunNow().AndEvery(24).Hours();
         }
     }
 }
