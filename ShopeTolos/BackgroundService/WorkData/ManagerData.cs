@@ -63,15 +63,14 @@ namespace ShopeTolos.BackgroundService.WorkData
 
         private async void SetOffers(List<Offer> offers)
         {
-            OfferOrder offerOrder = null;
-            PriceOffer priceOffer = null;
             foreach (Offer offer in offers)
             {
+                OfferOrder offerOrder = null;
+                PriceOffer priceOffer = null;
                 try
                 {
                     if (!sqlCommandTools.CheckOffer(offer.id))
                     {
-
                         offerOrder = new OfferOrder();
                         priceOffer = new PriceOffer();
                         priceOffer.DatateUpdate = DateTime.Now.ToString();

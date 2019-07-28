@@ -28,8 +28,8 @@ namespace DBOTool
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ToolShope;Trusted_Connection=True;");
-                optionsBuilder.UseSqlServer("Data Source=.\\WIN-LIVFRVQFMKO;Initial Catalog=ShopeTool;Integrated Security=False;User ID=Roma;Password=123;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;");
+                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ToolShope;Trusted_Connection=True;");
+                //optionsBuilder.UseSqlServer("Data Source=.\\WIN-LIVFRVQFMKO;Initial Catalog=ShopeTool;Integrated Security=False;User ID=Roma;Password=123;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;");
                 //optionsBuilder.UseSqlServer("Persist Security Info=False;User ID=Administrator;Password=;Initial Catalog=ShopeTool;Server=WIN-LIVFRVQFMKO");
             }
         }

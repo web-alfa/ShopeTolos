@@ -7,11 +7,14 @@ namespace ShopeTolos.Controllers
     {
         private ManagerShope managerShope = new ManagerShope();
 
-        [HttpPost]
+        [HttpGet]
         [Route("Statistics")]
-        public void GetStatistics()
+        public void GetStatistics(string idShope, string idShiping)
         {
-
+            if ((idShope != null && idShope != "") && (idShiping != null && idShiping != ""))
+            {
+                managerShope.GetStatistics(idShope, idShiping);
+            }
         }
     }
 }

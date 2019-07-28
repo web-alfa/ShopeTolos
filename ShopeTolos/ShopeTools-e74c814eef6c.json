@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "shopetools",
+  "private_key_id": "e74c814eef6cab14966c80b7f140482b2fef7f82",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDprP/INcAlpGTG\nFPXIdN/wyKJ+lvv1mIPUlBbczLpnxMHcexe0pmRQeAQLHZ4l1cCTLgsfSVjJWFD0\nreGu34zF5m9FFy2HTn//LlUz9DPITW/nk/EtCcaoa0PmuO8diYP8LzDr/Qge6rb8\n00ELx1SkvkZH6I/EtYe2xRvILQItBEbqnnpqD2XrU7EBnoQUzCSolREXVfWwJ/Ep\ndw/cta2YVAtl0ZvlJCfGr/4IFgNuDsWehKRr37P1huJgi/vnUwYlUdkoeYS2opJE\nxumVK9+93Kte7WoqZOHD9IKzl6SUcEWtRI3O8YYSCEagYrPgScvqubFycE/SJ09n\nYMwXeHe7AgMBAAECggEAUSUYNYgkz22E6RxCNXgQg+bINrlriV+K9/js74PQf1Re\nFZhRJRRa5W6nyMxiLLVLiFCG4DhyMokOo8j2A+nxUo+wuAdSchgabpzCTaZRjQ8G\n+x3utDse10FYdPhnYJRuVtZ0YJ6fgUz0eltJzTNM+2Bvu2zQ7/gxxpAwE5U9mi+m\nKoLQWYhvLQEmA+Gw7womtOdZDSseM0sD/uxHbc4vq+OgXfWLOFwkIVIjBGrOeFXk\nDqN45uq4z+Kj4x45cjruQgK4Q4L028Ab7s8FOVNeBPMvscDUWoH6xIA+GxbiDY+Q\ncCkyF593XGoveAA619b8T/63h6vioQPyz/D8S08a0QKBgQD0+MEIlgIfHpK6BeiT\naBZ18rYumJxoGoX/AzXjgHswp3kfGQmove/+KzLVh8arc7Fbw0QlaxtB9CpMJ0XK\nQfFrzojFV6YDA4qgGF/0QgwUo0PITu/GsgeqGwBmF97c34p1JJpzAr7/iMpXXb+P\nyr5SWtfkvsU1xCDryMWZQ1ncBQKBgQD0Mg/lpFkhZITROICiWjLoKErw7sLIv581\njYmzl6Bc7QnZobAckoB9xuI8bYbEidm1TrE8lfP8W87giTT0VcIRKSB6ON0hpkJQ\nACOCmwrVPyorSqiYs4duWKA2IMisTLF2dOSpvPLvsO7KF5pP+eWwPh0+WvHJKnSV\nkMAAf4kQvwKBgAtz9dJo8QBzdXis/gqmOyaYilvzVpynYMxjYgmY4CmOKuOBUCpL\ndwTzEBVbm7Y4Wnpnzq/RKh0TRUb6LxEdtCPOLCbNyj0p1TlW6mWJEPeGCo0644ru\nl90kFgiv5QN+kAKaC36FClj4FD2xbFtUp0FCbgWLxbyVxtQ/Nr3LoE/hAoGBAICa\n+PpVUseeW8CgREa8wEC6L7Wx2Q3GtX+LujDGMyOdhumCGPEDSv5yxuVSPX62ptyw\nw/EHfEa0x0BDoornu1w0T7Fuzy8Qk630VL9NDih+qqPAHwjEzBeWP1Iic+0iOvgK\n2f52z27ivO/b/F4QWyI1pEsZtGrgnCPE5wmcIUCbAoGBAPNzefNOvJlfHunTiCL8\nrOE8Zqyu6+KUskVBlH8Rfrqk+3Bkd30vhanw/SUa38Yr9p+zahE9QBQmteUsgdcM\ntuc6jo4M5MHZ0XKRGN2NhMSAFlokbdfhjyjvGRZ/Rp+COprvSpInFli25JXCjO70\njnSlNHVmlU254nGJ3zTnT5Yg\n-----END PRIVATE KEY-----\n",
+  "client_email": "starting-account-jvvygsmpsp5j@shopetools.iam.gserviceaccount.com",
+  "client_id": "104119505691969919107",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/starting-account-jvvygsmpsp5j%40shopetools.iam.gserviceaccount.com"
+}

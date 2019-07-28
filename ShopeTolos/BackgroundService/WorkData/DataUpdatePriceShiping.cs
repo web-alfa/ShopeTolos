@@ -35,6 +35,13 @@ namespace ShopeTolos.BackgroundService.WorkData
                         Offer offer = connectorEPN.GetOffer(offerOrders[i].Id);
                         priceOffer.Price = offer.price;
                         sqlCommandTools.AddPrice(offer.id, priceOffer);
+                        if(offerOrders[i].Name == "New")
+                        {
+                            offerOrders[i].Description = offer.description;
+                            offerOrders[i].Id_category = offer.id_category;
+                            offerOrders[i].Name = offer.name;
+                            sqlCommandTools.UpdateShiping(offerOrders[i]);
+                        }
                     }
                 }
                 catch (Exception e)

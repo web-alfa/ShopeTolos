@@ -57,6 +57,17 @@ namespace ShopeTolos.BackgroundService
             return isDataUpdate;
         }
 
+        internal OfferOrder GetOfferOrder(string idShiping)
+        {
+            return context.OfferOrders.Include(o => o.PriceOffers).FirstOrDefault(o => o.Id == idShiping);
+        }
+
+        public async void UpdateShiping(OfferOrder offerOrder)
+        {
+            context.OfferOrders.Update(offerOrder);
+            await context.SaveChangesAsync();
+        }
+
         public async void AddPrice(string idOffer, PriceOffer priceOffer)
         {
             OfferOrder offerOrder = context.OfferOrders.Include(o => o.PriceOffers).First(o => o.Id == idOffer);
@@ -88,6 +99,11 @@ namespace ShopeTolos.BackgroundService
                 }
             }
             return isDataUpdate;
+        }
+
+        internal Store GetOneStore(string idShope)
+        {
+            return context.Stores.FirstOrDefault(s => s.IDShope.ToString() == idShope);
         }
 
         public async void AddStore(Store store)
