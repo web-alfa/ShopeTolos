@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopeTolos", "ShopeTolos\ShopeTolos.csproj", "{EAE72756-99BB-4EB0-B3A9-A3BF7E894641}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBOTool", "DBOTool\DBOTool.csproj", "{0819540A-5B42-4118-9648-CD995F3E3F34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBOTool", "DBOTool\DBOTool.csproj", "{0819540A-5B42-4118-9648-CD995F3E3F34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
