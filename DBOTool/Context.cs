@@ -15,8 +15,8 @@ namespace DBOTool
         {
             try
             {
-                //Database.Migrate();
-                Database.EnsureCreated();
+                Database.Migrate();
+                //Database.EnsureCreated();
             }
             catch (Exception e)
             {
@@ -30,7 +30,7 @@ namespace DBOTool
             {
                 optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ToolShope;Trusted_Connection=True;");
                 //optionsBuilder.UseSqlServer("Data Source=.\\WIN-LIVFRVQFMKO;Initial Catalog=ShopeTool;Integrated Security=False;User ID=Roma;Password=123;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;");
-                //optionsBuilder.UseSqlServer("Persist Security Info=False;User ID=Administrator;Password=;Initial Catalog=ShopeTool;Server=WIN-LIVFRVQFMKO");
+                //optionsBuilder.UseSqlServer("Data Source=127.0.0.1;Initial Catalog=ShopeTool;Integrated Security=False;User ID=Roma;Password=123;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
             }
         }
     }

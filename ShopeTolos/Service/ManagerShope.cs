@@ -63,6 +63,18 @@ namespace ShopeTolos.Service
             if(store != null)
             {
                 responseStore = new ResponseStore();
+                double timeOnTheMarketYears = 0;
+                responseStore.CommunicationS = Convert.ToInt32(store.Communication.Replace("%", ""));
+                responseStore.ShippingSpeedS = Convert.ToInt32(store.ShippingSpeed.Replace("%", ""));
+                responseStore.ItemAsDescribedS = Convert.ToInt32(store.ItemAsDescribed.Replace("%", ""));
+                responseStore.StartOfSaleS = GetPercentStartOfSale(store.StartOfSales, ref timeOnTheMarketYears);
+                responseStore.FeedBackS = GetPercentFeedBack(Convert.ToInt32(store.Positive4_5Stars.Replace(",", "").Trim()), Convert.ToInt32(store.Neutral3Stars.Replace(",", "").Trim()), Convert.ToInt32(store.Negative1_2Stars.Replace(",", "").Trim()));
+                responseStore.timeOnTheMarketYears = timeOnTheMarketYears.ToString();
+                responseStore.Communication = GetDescCommunication(responseStore.CommunicationS);
+                responseStore.ShippingSpeed = GetShippingSpeed(responseStore.ShippingSpeedS);
+                responseStore.ItemAsDescribed = GetDescItemAsDescribed(responseStore.ItemAsDescribedS);
+                responseStore.StartOfSale = GetDescStartOfSale(timeOnTheMarketYears);
+                responseStore.FeedBack = GetDescFeedBack(responseStore.FeedBackS);
                 responseStore.Status = "OK";
             }
             else
@@ -71,7 +83,94 @@ namespace ShopeTolos.Service
                 responseStore.Status = "No_Content";
             }
             response.ResponseOrder = responseOrder;
+            response.ResponseStore = responseStore;
             return response;
+        }
+
+        private string GetDescFeedBack(int precent)
+        {
+            string desc = null;
+            if (precent < 33)
+            {
+                desc = $"Большая часть покупателей товаров этого продавца, не довольна товаром, {100 - precent}% покупателей не довольна товаром";
+            }
+            else if (precent >= 33 && 66 >= precent)
+            {
+                desc = $"половина покупателей товаров этого продавца, не довольна товаром , {100 - precent}% покупателей не довольна товаром";
+            }
+            else if (66 < precent)
+            {
+                 desc = $"Большая часть покупателей товаров этого продавца, довольна товаром, {100 - precent}% покупателей не довольна товаром";
+            }
+            return desc;
+        }
+
+        private string GetDescStartOfSale(double timeOnTheMarketYears)
+        {
+            string desc = null;
+            if (timeOnTheMarketYears < 1)
+            {
+                desc = "Продавец на площадке менее года";
+            }
+            else if (timeOnTheMarketYears == 1)
+            {
+                desc = "Продавец на площадке один год";
+            }
+            else if (timeOnTheMarketYears > 1 && 2 > timeOnTheMarketYears)
+            {
+                desc = "Продавец на площадке более одного года";
+            }
+            else if (2 == timeOnTheMarketYears)
+            {
+                desc = "Продавец на площадке два года";
+            }
+            else if (timeOnTheMarketYears > 2 && 3 > timeOnTheMarketYears)
+            {
+                desc = "Продавец на площадке более двух лет";
+            }
+            else if (3 == timeOnTheMarketYears)
+            {
+                desc = "Продавец на площадке три года";
+            }
+            else if (timeOnTheMarketYears > 3 && 4 > timeOnTheMarketYears)
+            {
+                desc = "Продавец на площадке более трех лет";
+            }
+            else if (4 == timeOnTheMarketYears)
+            {
+                desc = "Продавец на площадке четыре года";
+            }
+            else if (timeOnTheMarketYears > 4 && 5 > timeOnTheMarketYears)
+            {
+                desc = "Продавец на площадке более четырех лет";
+            }
+            else if (5 == timeOnTheMarketYears)
+            {
+                desc = "Продавец на площадке пять лет";
+            }
+            else if (5 < timeOnTheMarketYears)
+            {
+                desc = "Продавец на площадке более пяти лет";
+            }
+            return desc;
+        }
+
+        private string GetDescItemAsDescribed(int precent)
+        {
+            string desc = null;
+            if (precent < 33)
+            {
+                desc = "Товары продавца соответствубт описанию";
+            }
+            else if (precent >= 33 && 66 >= precent)
+            {
+                desc = "не все товары продавца соответствубт описанию";
+            }
+            else if (66 < precent)
+            {
+                desc = "Товары продавца не соответствубт описанию";
+            }
+            return desc;
         }
 
         private async Task<OfferOrder> GetOfferOrder(string idShiping, string idShope)
@@ -96,6 +195,42 @@ namespace ShopeTolos.Service
             return offerOrder1;
         }
 
+        private string GetDescCommunication(int precent)
+        {
+            string desc = null;
+            if(precent < 33)
+            {
+                desc = "У продавца плохая стастика общения с покупателем";
+            }
+            else if (precent >= 33 && 66 >= precent)
+            {
+                desc = "У продавца средняя стастика общения с покупателем";
+            }
+            else if (66 < precent)
+            {
+                desc = "У продавца хорошая стастика общения с покупателем";
+            }
+            return desc;
+        }
+
+        private string GetShippingSpeed(int precent)
+        {
+            string desc = null;
+            if (precent < 33)
+            {
+                desc = "У продавца плохая стастика времени доставки товара";
+            }
+            else if (precent >= 33 && 66 >= precent)
+            {
+                desc = "У продавца средняя стастика времени доставки товара";
+            }
+            else if (66 < precent)
+            {
+                desc = "У продавца хорошая стастика времени доставки товара";
+            }
+            return desc;
+        }
+
         private async Task<Store> GetStore(string idShope)
         {
             Store store = null;
@@ -111,6 +246,24 @@ namespace ShopeTolos.Service
             TranslationClient client = TranslationClient.Create(GoogleCredential.FromFile("ShopeTools-e74c814eef6c.json"));
             var response = client.TranslateText(text, language);
             return response.TranslatedText;
+        }
+
+        private int GetPercentStartOfSale(string StartOfSale, ref double timeOnTheMarketYears)
+        {
+            int percentStartOfSale = 0;
+            DateTime startOfSaleDate = DateTime.Parse(StartOfSale);
+            int timeOnTheMarketDays = (int)(DateTime.Now.Date  - startOfSaleDate.Date).TotalDays;
+            timeOnTheMarketYears = timeOnTheMarketDays / 365.25;
+            percentStartOfSale = (timeOnTheMarketDays * 100) / 1826;
+            return percentStartOfSale;
+        }
+
+        private int GetPercentFeedBack(int positiveFB, int neutralFB, int negativeFB)
+        {
+            int percentFeedBack = 0;
+            int countFB = positiveFB + neutralFB + negativeFB;
+            percentFeedBack = (positiveFB * 100) / countFB;
+            return percentFeedBack;
         }
 
         private string GetDFormat(string data)
@@ -141,6 +294,9 @@ namespace ShopeTolos.Service
             {
             }
             else if (DateTime.TryParseExact(data, "yyyy/MM/dd", null, DateTimeStyles.None, out date))
+            {
+            }
+            else if (DateTime.TryParseExact(data, "dd-MMM-yyyy", null, DateTimeStyles.None, out date))
             {
             }
             return date.ToShortDateString();

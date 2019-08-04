@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using ShopeTolos.Service;
 
 namespace ShopeTolos.Controllers
@@ -9,12 +10,14 @@ namespace ShopeTolos.Controllers
 
         [HttpGet]
         [Route("Statistics")]
-        public void GetStatistics(string idShope, string idShiping)
+        public string GetStatistics(string idShope, string idShiping)
         {
+            string res = "";
             if ((idShope != null && idShope != "") && (idShiping != null && idShiping != ""))
             {
-                managerShope.GetStatistics(idShope, idShiping);
+                res = JsonConvert.SerializeObject(managerShope.GetStatistics(idShope, idShiping));
             }
+            return res;
         }
     }
 }

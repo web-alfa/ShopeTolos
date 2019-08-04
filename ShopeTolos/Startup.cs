@@ -28,7 +28,7 @@ namespace ShopeTolos
                 app.UseDeveloperExceptionPage();
             }
             app.UseMvc();
-            JobManager.Initialize(new MyRegistry());
+            //JobManager.Initialize(new MyRegistry());
         }
     }
 }
