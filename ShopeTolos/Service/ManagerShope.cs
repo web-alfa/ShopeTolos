@@ -32,13 +32,17 @@ namespace ShopeTolos.Service
             return stores.Count.ToString();
         }
 
-        public async Task<Response> GetStatistics(string idShope, string idShiping)
+        public async Task<Response> GetStatistics(string idShiping)
         {
+            Store store = null;
             ResponseOrder responseOrder = null;
             ResponseStore responseStore = null;
             Response response = new Response();
-            OfferOrder offerOrder1 = await GetOfferOrder(idShiping, idShope);
-            Store store = await GetStore(idShope);
+            OfferOrder offerOrder1 = await GetOfferOrder(idShiping);
+            if (offerOrder1.Store_id != 0)
+            {
+                store = await GetStore(offerOrder1.Store_id.ToString());
+            }
             if (offerOrder1 != null)
             {
                 responseOrder = new ResponseOrder();
@@ -69,7 +73,7 @@ namespace ShopeTolos.Service
                 responseStore.ItemAsDescribedS = Convert.ToInt32(store.ItemAsDescribed.Replace("%", ""));
                 responseStore.StartOfSaleS = GetPercentStartOfSale(store.StartOfSales, ref timeOnTheMarketYears);
                 responseStore.FeedBackS = GetPercentFeedBack(Convert.ToInt32(store.Positive4_5Stars.Replace(",", "").Trim()), Convert.ToInt32(store.Neutral3Stars.Replace(",", "").Trim()), Convert.ToInt32(store.Negative1_2Stars.Replace(",", "").Trim()));
-                responseStore.timeOnTheMarketYears = timeOnTheMarketYears.ToString();
+                responseStore.TimeOnTheMarketYears = timeOnTheMarketYears.ToString();
                 responseStore.Communication = GetDescCommunication(responseStore.CommunicationS);
                 responseStore.ShippingSpeed = GetShippingSpeed(responseStore.ShippingSpeedS);
                 responseStore.ItemAsDescribed = GetDescItemAsDescribed(responseStore.ItemAsDescribedS);
@@ -85,6 +89,18 @@ namespace ShopeTolos.Service
             response.ResponseOrder = responseOrder;
             response.ResponseStore = responseStore;
             return response;
+        }
+
+        private string GetDescFeedBack()
+        {
+            return null;
+        }
+
+        private int GetPercentSeller_Rating(string allRaitings)
+        {
+            int percentSeller_Ratin = 0;
+
+            return percentSeller_Ratin;
         }
 
         private string GetDescFeedBack(int precent)
@@ -173,7 +189,7 @@ namespace ShopeTolos.Service
             return desc;
         }
 
-        private async Task<OfferOrder> GetOfferOrder(string idShiping, string idShope)
+        private async Task<OfferOrder> GetOfferOrder(string idShiping)
         {
             OfferOrder offerOrder1 = null;
             if (sqlCommandTools.CheckOffer(idShiping))
@@ -187,7 +203,6 @@ namespace ShopeTolos.Service
                 priceOffer.DatateUpdate = DateTime.Now.ToString();
                 offerOrder.Id = idShiping;
                 offerOrder.Name = "New";
-                offerOrder.Store_id = Convert.ToInt32(idShope); 
                 offerOrder.PriceOffers = new List<PriceOffer>();
                 offerOrder.PriceOffers.Add(priceOffer);
                 await sqlCommandTools.AddOffer(offerOrder);

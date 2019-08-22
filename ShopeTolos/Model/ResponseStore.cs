@@ -2,7 +2,9 @@
 {
     public class ResponseStore
     {
-        public string timeOnTheMarketYears { get; set; }
+        public string Seller_Rating { get; set; }
+        public int Seller_RatingS { get; set; }
+        public string TimeOnTheMarketYears { get; set; }
         public string Communication { get; set; }
         public int CommunicationS { get; set; }
         public string ShippingSpeed { get; set; }

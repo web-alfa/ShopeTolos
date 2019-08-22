@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using ShopeTolos.Model;
 using ShopeTolos.Service;
+using System.Threading.Tasks;
 
 namespace ShopeTolos.Controllers
 {
@@ -8,15 +10,28 @@ namespace ShopeTolos.Controllers
     {
         private ManagerShope managerShope = new ManagerShope();
 
-        [HttpGet]
+        [HttpPost]
         [Route("Statistics")]
-        public string GetStatistics(string idShope, string idShiping)
+        public async Task<string> GetStatistics(string idShiping)
         {
+            var s = Request;
             string res = "";
-            if ((idShope != null && idShope != "") && (idShiping != null && idShiping != ""))
+            if (idShiping != null && idShiping != "")
             {
-                res = JsonConvert.SerializeObject(managerShope.GetStatistics(idShope, idShiping));
+                res = JsonConvert.SerializeObject(await managerShope.GetStatistics(idShiping));
             }
+            else
+            {
+                Response response = new Response();
+                ResponseOrder responseOrder = new ResponseOrder();
+                ResponseStore responseStore = new ResponseStore();
+                responseOrder.Status = "No_Content";
+                responseStore.Status = "No_Content";
+                response.ResponseOrder = responseOrder;
+                response.ResponseStore = responseStore;
+                res = JsonConvert.SerializeObject(response);
+            }
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
             return res;
         }
     }

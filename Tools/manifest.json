@@ -24,6 +24,17 @@
       ],
       "js": [ "Ali.js", "Init.js" ],
       "run_at": "document_start"
+
     }
+  ],
+  "permissions": [
+    "http://localhost/",
+    "https://localhost/",
+    "https://185.204.0.238/",
+    "http://192.168.0.100/",
+    "https://192.168.0.100/",
+    "http://www.google.com/",
+    "https://www.google.com/"
   ]
+ 
 }

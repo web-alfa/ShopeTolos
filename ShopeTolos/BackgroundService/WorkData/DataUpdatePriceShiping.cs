@@ -40,6 +40,7 @@ namespace ShopeTolos.BackgroundService.WorkData
                             offerOrders[i].Description = offer.description;
                             offerOrders[i].Id_category = offer.id_category;
                             offerOrders[i].Name = offer.name;
+                            offerOrders[i].Store_id = offer.store_id;
                             sqlCommandTools.UpdateShiping(offerOrders[i]);
                         }
                     }
