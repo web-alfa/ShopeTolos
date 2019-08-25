@@ -43,8 +43,15 @@ namespace ShopeTolos.BackgroundService.WorkData
                 while (offers1.Count != 0)
                 {
                     offset += 1000;
-                    offers1 = connectorEPN.GetOffers(categorie.id, ref totalFound, offset);
-                    if (offers1[0].id == backIdOrder)
+                    if (offers1.Count >= 900)
+                    {
+                        offers1 = connectorEPN.GetOffers(categorie.id, ref totalFound, offset);
+                    }
+                    else
+                    {
+                        offers1 = null;
+                    }
+                    if (offers1 == null || offers1.Count == 0 || offers1[0].id == backIdOrder)
                     {
                         SetOffers(offers);
                         offers = null;
@@ -61,7 +68,7 @@ namespace ShopeTolos.BackgroundService.WorkData
             }
         }
 
-        private async void SetOffers(List<Offer> offers)
+        private void SetOffers(List<Offer> offers)
         {
             foreach (Offer offer in offers)
             {
@@ -82,7 +89,7 @@ namespace ShopeTolos.BackgroundService.WorkData
                         offerOrder.Store_id = offer.store_id;
                         offerOrder.PriceOffers = new List<PriceOffer>();
                         offerOrder.PriceOffers.Add(priceOffer);
-                        await sqlCommandTools.AddOffer(offerOrder);
+                        sqlCommandTools.AddOffer(offerOrder);
                     }
                 }
                 catch (Exception e)

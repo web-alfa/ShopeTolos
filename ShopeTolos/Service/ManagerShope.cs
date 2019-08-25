@@ -73,12 +73,14 @@ namespace ShopeTolos.Service
                 responseStore.ItemAsDescribedS = Convert.ToInt32(store.ItemAsDescribed.Replace("%", ""));
                 responseStore.StartOfSaleS = GetPercentStartOfSale(store.StartOfSales, ref timeOnTheMarketYears);
                 responseStore.FeedBackS = GetPercentFeedBack(Convert.ToInt32(store.Positive4_5Stars.Replace(",", "").Trim()), Convert.ToInt32(store.Neutral3Stars.Replace(",", "").Trim()), Convert.ToInt32(store.Negative1_2Stars.Replace(",", "").Trim()));
+                responseStore.Seller_RatingS = GetPercentSeller_Rating(responseStore.CommunicationS + responseStore.ShippingSpeedS + responseStore.ItemAsDescribedS + responseStore.StartOfSaleS + responseStore.FeedBackS);
                 responseStore.TimeOnTheMarketYears = timeOnTheMarketYears.ToString();
                 responseStore.Communication = GetDescCommunication(responseStore.CommunicationS);
                 responseStore.ShippingSpeed = GetShippingSpeed(responseStore.ShippingSpeedS);
                 responseStore.ItemAsDescribed = GetDescItemAsDescribed(responseStore.ItemAsDescribedS);
                 responseStore.StartOfSale = GetDescStartOfSale(timeOnTheMarketYears);
                 responseStore.FeedBack = GetDescFeedBack(responseStore.FeedBackS);
+                responseStore.Seller_Rating = GetDescSeller_Rating(responseStore.Seller_RatingS);
                 responseStore.Status = "OK";
             }
             else
@@ -91,30 +93,41 @@ namespace ShopeTolos.Service
             return response;
         }
 
-        private string GetDescFeedBack()
+        private string GetDescSeller_Rating(int precent)
         {
-            return null;
+            string desc = null;
+            if (precent < 60)
+            {
+                desc = $"Нызкий";
+            }
+            else if (precent >= 60 && 80 >= precent)
+            {
+                desc = $"Серний";
+            }
+            else if (80 < precent)
+            {
+                desc = $"Высокий";
+            }
+            return desc;
         }
 
-        private int GetPercentSeller_Rating(string allRaitings)
+        private int GetPercentSeller_Rating(int allReiting)
         {
-            int percentSeller_Ratin = 0;
-
-            return percentSeller_Ratin;
+            return (100 * allReiting) / 600;
         }
 
         private string GetDescFeedBack(int precent)
         {
             string desc = null;
-            if (precent < 33)
+            if (precent < 60)
             {
                 desc = $"Большая часть покупателей товаров этого продавца, не довольна товаром, {100 - precent}% покупателей не довольна товаром";
             }
-            else if (precent >= 33 && 66 >= precent)
+            else if (precent >= 60 && 80 >= precent)
             {
                 desc = $"половина покупателей товаров этого продавца, не довольна товаром , {100 - precent}% покупателей не довольна товаром";
             }
-            else if (66 < precent)
+            else if (80 < precent)
             {
                  desc = $"Большая часть покупателей товаров этого продавца, довольна товаром, {100 - precent}% покупателей не довольна товаром";
             }
@@ -174,17 +187,17 @@ namespace ShopeTolos.Service
         private string GetDescItemAsDescribed(int precent)
         {
             string desc = null;
-            if (precent < 33)
-            {
-                desc = "Товары продавца соответствубт описанию";
-            }
-            else if (precent >= 33 && 66 >= precent)
-            {
-                desc = "не все товары продавца соответствубт описанию";
-            }
-            else if (66 < precent)
+            if (precent < 60)
             {
                 desc = "Товары продавца не соответствубт описанию";
+            }
+            else if (precent >= 60 && 80 >= precent)
+            {
+                desc = "Не все товары продавца соответствубт описанию";
+            }
+            else if (80 < precent)
+            {
+                desc = "Товары продавца соответствуют описанию";
             }
             return desc;
         }
@@ -205,7 +218,7 @@ namespace ShopeTolos.Service
                 offerOrder.Name = "New";
                 offerOrder.PriceOffers = new List<PriceOffer>();
                 offerOrder.PriceOffers.Add(priceOffer);
-                await sqlCommandTools.AddOffer(offerOrder);
+                sqlCommandTools.AddOffer(offerOrder);
             }
             return offerOrder1;
         }
@@ -213,11 +226,11 @@ namespace ShopeTolos.Service
         private string GetDescCommunication(int precent)
         {
             string desc = null;
-            if(precent < 33)
+            if(precent < 60)
             {
                 desc = "У продавца плохая стастика общения с покупателем";
             }
-            else if (precent >= 33 && 66 >= precent)
+            else if (precent >= 60 && 80 >= precent)
             {
                 desc = "У продавца средняя стастика общения с покупателем";
             }
@@ -231,15 +244,15 @@ namespace ShopeTolos.Service
         private string GetShippingSpeed(int precent)
         {
             string desc = null;
-            if (precent < 33)
+            if (precent < 60)
             {
                 desc = "У продавца плохая стастика времени доставки товара";
             }
-            else if (precent >= 33 && 66 >= precent)
+            else if (precent >= 60 && 80 >= precent)
             {
                 desc = "У продавца средняя стастика времени доставки товара";
             }
-            else if (66 < precent)
+            else if (80 < precent)
             {
                 desc = "У продавца хорошая стастика времени доставки товара";
             }

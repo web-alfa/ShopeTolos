@@ -21,4 +21,8 @@
     <ProjectReference Include="..\DBOTool\DBOTool.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="log\" />
+  </ItemGroup>
+
 </Project>

@@ -79,7 +79,7 @@ namespace ShopeTolos.BackgroundService
             await context.SaveChangesAsync();
         }
 
-        public async Task AddOffer(OfferOrder offerOrder)
+        public async void AddOffer(OfferOrder offerOrder)
         {
             context.OfferOrders.Add(offerOrder);
             await context.SaveChangesAsync();
@@ -91,9 +91,16 @@ namespace ShopeTolos.BackgroundService
             Store store = context.Stores.FirstOrDefault(o => o.IDShope == idShope);
             if (store != null)
             {
-                string stroreDatateUpdate = store.DateUpdate;
-                DateTime dateTime = DateTime.Parse($"{GetDFormat(stroreDatateUpdate.Remove(stroreDatateUpdate.IndexOf(" ")))} {stroreDatateUpdate.Remove(0, stroreDatateUpdate.IndexOf(" ") + 1)}");
-                if (dateTime < DateTime.Now.AddHours(-3))
+                if (store.DateUpdate != null)
+                {
+                    string stroreDatateUpdate = store.DateUpdate;
+                    DateTime dateTime = DateTime.Parse($"{GetDFormat(stroreDatateUpdate.Remove(stroreDatateUpdate.IndexOf(" ")))} {stroreDatateUpdate.Remove(0, stroreDatateUpdate.IndexOf(" ") + 1)}");
+                    if (dateTime < DateTime.Now.AddHours(-3))
+                    {
+                        isDataUpdate = true;
+                    }
+                }
+                else
                 {
                     isDataUpdate = true;
                 }

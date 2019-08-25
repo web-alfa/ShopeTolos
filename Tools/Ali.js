@@ -300,11 +300,11 @@ function SetChildrenRaitingSalle(responseStore) {
         divRaitings.append(divParentFeedBack);
 
         divRaitings.style.padding = "10px";
-        //pRaitings.style.color = GetColorResultStatistick(responseStore.Seller_RatingS);
-        pRaitings.style.color = GetColorResultStatistick(90);
+        pRaitings.style.color = GetColorResultStatistick(responseStore.Seller_RatingS);
+        //pRaitings.style.color = GetColorResultStatistick(90);
         pRaitings.style.marginLeft = "10px";
-        //pRaitings.textContent = responseStore.Seller_RatingS;
-        pRaitings.textContent = ":)  Высоко, 90%";
+        pRaitings.textContent = responseStore.Seller_Rating + ", " + responseStore.Seller_RatingS + "%";
+        //pRaitings.textContent = ":)  Высоко, 90%";
         pRaitings.style.fontSize = "28px";
         divSaledataEl.appendChild(pRaitings);
         divSaledataEl.appendChild(divRaitings);

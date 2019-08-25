@@ -29,7 +29,6 @@ namespace DBOTool
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ToolShope;Trusted_Connection=True;");
-                //optionsBuilder.UseSqlServer("Data Source=.\\WIN-LIVFRVQFMKO;Initial Catalog=ShopeTool;Integrated Security=False;User ID=Roma;Password=123;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;");
                 //optionsBuilder.UseSqlServer("Data Source=127.0.0.1;Initial Catalog=ShopeTool;Integrated Security=False;User ID=Roma;Password=123;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
             }
         }
