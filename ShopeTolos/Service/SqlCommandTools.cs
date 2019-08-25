@@ -79,10 +79,10 @@ namespace ShopeTolos.BackgroundService
             await context.SaveChangesAsync();
         }
 
-        public async void AddOffer(OfferOrder offerOrder)
+        public void AddOffer(OfferOrder offerOrder)
         {
             context.OfferOrders.Add(offerOrder);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
 
         public bool CheckUpdateShope(int idShope)

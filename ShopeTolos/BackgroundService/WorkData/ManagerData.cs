@@ -27,7 +27,7 @@ namespace ShopeTolos.BackgroundService.WorkData
             }
         }
 
-        private void WorkShiping(Categorie categorie)
+        private async void WorkShiping(Categorie categorie)
         {
             string backIdOrder = "";
             List<Offer> offers = new List<Offer>();
@@ -53,7 +53,7 @@ namespace ShopeTolos.BackgroundService.WorkData
                     }
                     if (offers1 == null || offers1.Count == 0 || offers1[0].id == backIdOrder)
                     {
-                        SetOffers(offers);
+                        await SetOffers(offers);
                         offers = null;
                         backIdOrder = "";
                         break;
@@ -68,7 +68,7 @@ namespace ShopeTolos.BackgroundService.WorkData
             }
         }
 
-        private void SetOffers(List<Offer> offers)
+        private async Task SetOffers(List<Offer> offers)
         {
             foreach (Offer offer in offers)
             {
