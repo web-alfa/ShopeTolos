@@ -28,9 +28,14 @@ namespace ShopeTolos.BackgroundService
             return context.Stores.ToList();
         }
 
-        public async Task<List<OfferOrder>> GetOfferOrders()
+        public  List<OfferOrder> GetOfferOrders()
         {
-            return await context.OfferOrders.Include(o => o.PriceOffers).ToListAsync();
+            return context.OfferOrders.Where(o => o.Store_id != 0 && o.Name != "New").ToList();
+        }
+
+        public List<OfferOrder> GetOfferOrders1()
+        {
+            return  context.OfferOrders.Where(o =>o.Name == "New").ToList();
         }
 
         public bool CheckOffer(string idOffer)
@@ -48,7 +53,7 @@ namespace ShopeTolos.BackgroundService
                 {
                     string priceOfferDatateUpdate = offerOrder.PriceOffers.Last().DatateUpdate;
                     DateTime dateTime = DateTime.Parse($"{GetDFormat(priceOfferDatateUpdate.Remove(priceOfferDatateUpdate.IndexOf(" ")))} {priceOfferDatateUpdate.Remove(0, priceOfferDatateUpdate.IndexOf(" ") + 1)}");
-                    if (dateTime < DateTime.Now.AddHours(-3))
+                    if (dateTime < DateTime.Now.AddHours(-20))
                     {
                         isDataUpdate = true;
                     }

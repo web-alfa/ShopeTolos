@@ -4,12 +4,11 @@ using ShopeTolos.BackgroundService.WorkData.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ShopeTolos.BackgroundService.WorkData
 {
-    public class DataUpdatePriceShiping : IJob
+    public class InitShopNew : IJob
     {
         private SqlCommandTools sqlCommandTools = null;
         private ConnectorEPN connectorEPN = null;
@@ -18,23 +17,24 @@ namespace ShopeTolos.BackgroundService.WorkData
         {
             sqlCommandTools = new SqlCommandTools();
             connectorEPN = new ConnectorEPN();
-            Task.Run(() => WorkUpdatePrice());
+            Task.Run(() => WorkShopNew());
         }
 
-        private async void WorkUpdatePrice()
+        private async void WorkShopNew()
         {
-            List<OfferOrder> offerOrders = sqlCommandTools.GetOfferOrders();
+            List<OfferOrder> offerOrders = sqlCommandTools.GetOfferOrders1();
             for (int i = 0; i < offerOrders.Count; i++)
             {
                 try
                 {
-                    if (sqlCommandTools.CheckPrice(offerOrders[i].Id))
+                    if (offerOrders[i].Name == "New")
                     {
-                        PriceOffer priceOffer = new PriceOffer();
-                        priceOffer.DatateUpdate = DateTime.Now.ToString();
                         Offer offer = connectorEPN.GetOffer(offerOrders[i].Id);
-                        priceOffer.Price = offer.price;
-                        sqlCommandTools.AddPrice(offer.id, priceOffer);
+                        offerOrders[i].Description = offer.description;
+                        offerOrders[i].Id_category = offer.id_category;
+                        offerOrders[i].Name = offer.name;
+                        offerOrders[i].Store_id = offer.store_id;
+                        sqlCommandTools.UpdateShiping(offerOrders[i]);
                     }
                 }
                 catch (Exception e)

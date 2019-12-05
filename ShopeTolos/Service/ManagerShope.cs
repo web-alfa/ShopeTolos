@@ -1,6 +1,7 @@
 ﻿using DBOTool.Model;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Translation.V2;
+using Newtonsoft.Json;
 using ShopeTolos.BackgroundService;
 using ShopeTolos.Model;
 using System;
@@ -26,10 +27,22 @@ namespace ShopeTolos.Service
             return offerOrders.Count.ToString();
         }
 
+        internal string GetOneShiping(string idShiping)
+        {
+            OfferOrder offerOrder = sqlCommandTools.GetOfferOrder(idShiping.ToString());
+            return JsonConvert.SerializeObject(offerOrder);
+        }
+
         public string GetStore()
         {
             List<Store> stores = sqlCommandTools.GetStore();
             return stores.Count.ToString();
+        }
+
+        internal string GetOneStore(string idStore)
+        {
+            Store store = sqlCommandTools.GetOneStore(idStore.ToString());
+            return JsonConvert.SerializeObject(store);
         }
 
         public async Task<Response> GetStatistics(string idShiping)
@@ -215,6 +228,7 @@ namespace ShopeTolos.Service
                 PriceOffer priceOffer = new PriceOffer();
                 priceOffer.DatateUpdate = DateTime.Now.ToString();
                 offerOrder.Id = idShiping;
+                offerOrder.Store_id = 0;
                 offerOrder.Name = "New";
                 offerOrder.PriceOffers = new List<PriceOffer>();
                 offerOrder.PriceOffers.Add(priceOffer);

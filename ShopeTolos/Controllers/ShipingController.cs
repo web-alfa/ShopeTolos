@@ -20,10 +20,24 @@ namespace ShopeTolos.Controllers
         }
 
         [HttpGet]
+        [Route("OneShiping")]
+        public string GetOneShiping(string idShiping)
+        {
+            return managerShope.GetOneShiping(idShiping);
+        }
+
+        [HttpGet]
         [Route("Store")]
         public string GetStore()
         {
             return managerShope.GetStore();
+        }
+
+        [HttpGet]
+        [Route("OneStore")]
+        public string GetOneStore(string idStore)
+        {
+            return managerShope.GetOneStore(idStore);
         }
     }
 }

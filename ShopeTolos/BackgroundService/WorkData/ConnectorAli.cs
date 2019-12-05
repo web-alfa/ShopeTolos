@@ -41,11 +41,15 @@ namespace ShopeTolos.BackgroundService.WorkData
 
         private async void WorkParseAndAddDBShope()
         {
-            List<OfferOrder> offerOrders = await sqlCommandTools.GetOfferOrders();
+            List<OfferOrder> offerOrders = sqlCommandTools.GetOfferOrders();
             foreach(OfferOrder offerOrder in offerOrders)
             {
                 try
                 {
+                    if(offerOrder.Store_id == 2062084 && offerOrder.Store_id == 2221046)
+                    {
+
+                    }
                     Store store = GetReityngs(offerOrder.Store_id);
                     if (store != null)
                     {
@@ -53,6 +57,7 @@ namespace ShopeTolos.BackgroundService.WorkData
                         {
                             if (sqlCommandTools.CheckUpdateShope(offerOrder.Store_id))
                             {
+                                store.IDShope = offerOrder.Store_id;
                                 sqlCommandTools.UpdateStore(store);
                             }
                         }

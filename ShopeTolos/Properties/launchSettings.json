@@ -27,7 +27,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "nativeDebugging": false,
-      "applicationUrl": "https://192.168.0.100;http://192.168.0.100;https://localhost;http://localhost;"
+      "applicationUrl": "https://localhost;http://localhost;"
     }
   }
 }
